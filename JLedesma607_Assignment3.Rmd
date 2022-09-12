@@ -1,0 +1,27 @@
+---
+title: "JLedesma607_Assignment3"
+output: html_document
+date: "2022-09-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Installing packages and connecting R to MySqlserver
+
+install.packages("RMariaDB")
+library(RMariaADB)
+MovieReviewsDatabase <- dbConnect(RMariaDB::MariaDB(), user='MovieReviews', password='Datascience1!', dbname='MovieReviewsraw', host='localhost')
+
+## Reading Movie Review table and placing into a Data Frame
+
+MovieReviewsDF <- dbReadTable(MovieReviewsDatabase, 'Moviereviews2')
+
+## Removing entries with -1(indicating the movie was not watched) and replacing them with 0, indicating the missing data.
+
+for (i in 1:6){
+for (p in 3:8){
+if (MovieReviewsDF[i,p] < 1) {(MovieReviewsDF[i,p] <- 0)
+}
+}}
